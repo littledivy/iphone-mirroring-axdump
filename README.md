@@ -2,6 +2,6 @@
 2. Start VoiceOver
 3. Run this:
 ```
-sudo dtrace -p $PID -s /Users/divy/Projects/phonectl/axsniff/sniff.d > /tmp/axstream.txt 2>/dev/null
+sudo dtrace -p $PID -s ./sniff.d > /tmp/axstream.txt 2>/dev/null
 ```
 4. Hook it up with an AI agent and control your iPhone?
