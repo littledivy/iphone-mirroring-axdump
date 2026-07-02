@@ -32,8 +32,4 @@ were discovered, worst → best:
   [`pymobiledevice3-rsdcheckin.patch`](03-direct-device/pymobiledevice3-rsdcheckin.patch))
   — over **Wi-Fi**. Reading is rock solid; app-launching is the weak spot.
 
-See [`APPLE_FEEDBACK.md`](APPLE_FEEDBACK.md) for the (non-security) Feedback
-Assistant notes: an enhancement request for a supported third-party path, and a
-low-severity hardening note.
-
 [pymobiledevice3]: https://github.com/doronz88/pymobiledevice3
