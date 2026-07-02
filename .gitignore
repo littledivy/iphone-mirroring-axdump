@@ -1,0 +1,6 @@
+# compiled swift binary
+02-mirroring-swift/remote_axtree
+# python venvs / caches
+03-direct-device/.venv/
+**/__pycache__/
+*.pyc

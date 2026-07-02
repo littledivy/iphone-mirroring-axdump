@@ -1,0 +1,32 @@
+Fix: RSD DTX services need the RSDCheckin handshake
+
+pymobiledevice3's DtxServiceProvider._open_dtx_connection opens an RSD service
+with a raw TCP connect (create_service_connection) and never performs the
+RSDCheckin handshake. That is fine for RemoteXPC-native DTX services (e.g.
+com.apple.instruments.dtservicehub), but lockdown-style shims advertised over
+RSD with UsesRemoteXPC=False — such as
+com.apple.accessibility.axAuditDaemon.remoteserver.shim.remote — require the
+RSDCheckin exchange first. Without it, iOS 26 drops the connection on the first
+DTX byte ("Connection was terminated abruptly").
+
+This makes `pymobiledevice3 developer accessibility ...` work over a wireless
+RemoteXPC tunnel (it previously only worked over USB).
+
+The fix: for RemoteServiceDiscoveryService, use start_lockdown_service (which
+performs RSDCheckin) instead of a raw create_service_connection.
+
+--- a/pymobiledevice3/dtx_service_provider.py
++++ b/pymobiledevice3/dtx_service_provider.py
+@@ _open_dtx_connection
+         lockdown = self.lockdown
++        # Lockdown-style RSD services (UsesRemoteXPC=False, e.g. the
++        # *.shim.remote DTX daemons like axAuditDaemon) require the RSDCheckin
++        # handshake before they accept DTX framing; a raw TCP connect gets
++        # dropped on the first byte by iOS 26. start_lockdown_service performs
++        # RSDCheckin.
++        if isinstance(lockdown, RemoteServiceDiscoveryService):
++            svc = await lockdown.start_lockdown_service(service_name)
++            return DTXConnection(svc.reader, svc.writer)
+         attr = await lockdown.get_service_connection_attributes(service_name, False)
+         svc = await lockdown.create_service_connection(attr["Port"])
+         await svc._ensure_started()

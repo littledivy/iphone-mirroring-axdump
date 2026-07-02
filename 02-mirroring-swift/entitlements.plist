@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <!-- Authorizes reading the mirrored device's accessibility content. This is
+       the switch VoiceOver holds; it is what makes the iOS tree appear. -->
+  <key>com.apple.private.accessibility.remoteDeviceContent</key><true/>
+  <!-- Forces the accessibility translation bundle to load into the target. -->
+  <key>com.apple.private.accessibility.forceBundleLoad</key><true/>
+  <!-- General AX inspection of another process. -->
+  <key>com.apple.private.accessibility.inspection</key><true/>
+  <!-- Read AX content the app marks as protected. -->
+  <key>com.apple.private.accessibility.accessProtectedContent</key><true/>
+  <!-- SkyLight/WindowServer accessibility UI access. -->
+  <key>com.apple.private.SkyLight.accessibility.ui</key><true/>
+</dict>
+</plist>
